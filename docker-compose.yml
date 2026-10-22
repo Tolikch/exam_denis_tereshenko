@@ -1,0 +1,17 @@
+services:
+  exam:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./submissions:/app/submissions
+      - ./students.json:/app/students.json:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - ADMIN_LOGIN=${ADMIN_LOGIN:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - SECRET_KEY=${SECRET_KEY:-local-exam-change-me}
+      - EXAM_MINUTES=${EXAM_MINUTES:-90}
+      - EXECUTOR_HOST_DIR=${PWD}/submissions
+    restart: unless-stopped

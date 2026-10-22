@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='exam-extra.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='editor.css') }}">
+<div class="exam-head"><div><p class="eyebrow">{{ attempt['last_name'] }} {{ attempt['first_name'] }} // {{ attempt['group_name'] }}</p><h1>{{ attempt['language'].upper() }} <em>EXAM</em></h1></div><div id="timer" data-seconds="{{ seconds }}">--:--:--</div><form action="/finish" method="post"><button class="danger">СДАТЬ ЭКЗАМЕН</button></form></div>
+<div class="task-tabs">{% for task in tasks %}<button class="tab {% if loop.first %}active{% endif %}" data-target="task-{{ task.id }}">0{{task.id}} <small>{{task.score}}/{{task.points}}</small></button>{% endfor %}</div>
+{% for task in tasks %}
+<section id="task-{{task.id}}" class="task {% if not loop.first %}hidden{% endif %}" data-id="{{task.id}}" data-points="{{task.points}}">
+  <div class="task-info"><p class="eyebrow">TASK_0{{task.id}} // {{task.points}} POINTS</p><h2>{{task.title}}</h2><p>{{task.description}}</p><pre>{{task.examples}}</pre><p class="hint">{% if attempt['language'] == 'python' %}Напишите функцию <code>solve(input_data)</code>, которая возвращает строку.{% else %}Напишите класс <code>Solution</code> со статическим методом <code>solve(String inputData)</code>, который возвращает строку.{% endif %}</p></div>
+  <div class="editor"><div class="code-editor" data-language="{{ attempt['language'] }}">{{task.code}}</div><label class="custom-input-label">СВОИ ВХОДНЫЕ ДАННЫЕ<textarea class="custom-input" spellcheck="false" placeholder="Например: 7 13"></textarea></label><div class="actions"><button class="save">СОХРАНИТЬ</button><button class="execute">▷ ВЫПОЛНИТЬ КОД</button><button class="run">▶ ЗАПУСТИТЬ ТЕСТЫ</button></div><div class="result">Введите данные и нажмите «Выполнить код» — здесь появится фактический вывод программы.</div></div>
+</section>
+{% endfor %}
+<script src="{{ url_for('static', filename='ace/ace.js') }}"></script>
+<script src="{{ url_for('static', filename='ace/ext-language_tools.js') }}"></script>
+<script src="{{ url_for('static', filename='ace/mode-python.js') }}"></script>
+<script src="{{ url_for('static', filename='ace/mode-java.js') }}"></script>
+<script src="{{ url_for('static', filename='ace/theme-terminal.js') }}"></script>
+<script src="{{ url_for('static', filename='exam.js') }}"></script>
+{% endblock %}

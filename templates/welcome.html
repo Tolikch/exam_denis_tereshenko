@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}">
+<section class="boot-screen" id="boot-screen">
+  <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+  <div class="boot-grid" aria-hidden="true"></div>
+  <div class="boot-content">
+    <p class="eyebrow boot-label">DENIS_T.EXAM_OS // CONNECTION GATEWAY</p>
+    <img class="skull" src="{{ url_for('static', filename='assets/denis-skull.png') }}" alt="Череп в очках">
+    <h1>Добро пожаловать на экзамен<br><em>самого Дениса Терещенко</em></h1>
+    <p class="hunger">Удачных вам <strong>Голодных игр.</strong></p>
+    <div class="connection-panel" id="connection-panel">
+      <div class="connection-top"><span>СИСТЕМА ПОДКЛЮЧЕНИЯ</span><span id="boot-percent">00%</span></div>
+      <div class="connection-track"><i id="boot-progress"></i></div>
+      <ol id="boot-stages">
+        <li>Ожидание инициализации...</li>
+        <li>Поиск локального экзаменационного узла</li>
+        <li>Туннель безопасности и шифрование канала</li>
+        <li>Синхронизация таймера экзамена</li>
+        <li>Сервер Дениса Терещенко доступен</li>
+      </ol>
+    </div>
+    <button class="boot-button" id="boot-button">ИНИЦИИРОВАТЬ ПОДКЛЮЧЕНИЕ <span>↯</span></button>
+    <a href="/login" class="skip-link">ПРОПУСТИТЬ АНИМАЦИЮ →</a>
+  </div>
+</section>
+<script src="{{ url_for('static', filename='welcome.js') }}"></script>
+{% endblock %}
